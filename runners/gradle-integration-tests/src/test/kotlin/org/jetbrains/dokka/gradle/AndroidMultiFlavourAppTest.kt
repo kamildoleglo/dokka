@@ -37,8 +37,8 @@ class AndroidMultiFlavourAppTest : AbstractDokkaAndroidGradleTest() {
         checkNoErrorClasses(docsOutput)
         checkNoUnresolvedLinks(docsOutput)
 
-        checkExternalLink(docsOutput, "<span class=\"identifier\">Activity</span>",
-                """<a href="https://developer.android.com/reference/android/app/Activity.html"><span class="identifier">Activity</span></a>""")
+        checkExternalLink(docsOutput,
+            "<a href=\"https://developer.android.com/reference/android/app/Activity.html\"><span class=\"identifier\">Activity</span></a>")
     }
 
     @Test fun `test kotlin 1_1_2-5 and gradle 4_0 and abt 3_0_0-alpha3`() {

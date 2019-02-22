@@ -33,7 +33,7 @@ class BasicTest : AbstractDokkaGradleTest() {
         checkNoErrorClasses(docsOutput)
         checkNoUnresolvedLinks(docsOutput)
 
-        checkExternalLink(docsOutput, "<span class=\"identifier\">String</span>",
+        checkExternalLink(docsOutput,
                 """<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a>""")
     }
 

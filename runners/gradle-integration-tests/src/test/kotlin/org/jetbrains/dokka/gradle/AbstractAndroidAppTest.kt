@@ -44,7 +44,7 @@ abstract class AbstractAndroidAppTest(val testDataRootPath: String) : AbstractDo
         checkNoErrorClasses(docsOutput)
         checkNoUnresolvedLinks(docsOutput)
 
-        checkExternalLink(docsOutput, "<span class=\"identifier\">Activity</span>",
+        checkExternalLink(docsOutput,
                 """<a href="https://developer.android.com/reference/android/app/Activity.html"><span class="identifier">Activity</span></a>""")
     }
 

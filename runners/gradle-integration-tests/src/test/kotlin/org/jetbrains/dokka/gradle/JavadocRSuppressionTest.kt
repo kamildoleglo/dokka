@@ -1,7 +1,9 @@
 package org.jetbrains.dokka.gradle
 
+import org.junit.Ignore
 import org.junit.Test
 
+@Ignore("enable when Javadoc generation is fixed")
 class JavadocRSuppressionTest : AbstractAndroidAppTest("androidAppJavadoc") {
     @Test
     fun `test kotlin 1_1_2-5 and gradle 4_0 and abt 3_0_0-alpha3`() {

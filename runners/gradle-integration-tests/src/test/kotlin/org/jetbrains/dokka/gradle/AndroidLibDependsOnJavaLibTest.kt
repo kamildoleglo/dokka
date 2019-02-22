@@ -38,7 +38,7 @@ class AndroidLibDependsOnJavaLibTest: AbstractDokkaAndroidGradleTest() {
         checkNoErrorClasses(docsOutput)
         checkNoUnresolvedLinks(docsOutput)
 
-        checkExternalLink(docsOutput, "<span class=\"identifier\">LibClz</span>",
+        checkExternalLink(docsOutput,
                 """<a href="https://example.com/example/jlib/LibClz.html"><span class="identifier">LibClz</span></a>""")
     }
 

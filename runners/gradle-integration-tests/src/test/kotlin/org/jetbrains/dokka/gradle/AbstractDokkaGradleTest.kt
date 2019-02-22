@@ -3,6 +3,7 @@ package org.jetbrains.dokka.gradle
 
 import com.intellij.rt.execution.junit.FileComparisonFailure
 import org.gradle.testkit.runner.GradleRunner
+import org.junit.ComparisonFailure
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import java.io.File
@@ -67,34 +68,23 @@ abstract class AbstractDokkaGradleTest {
         println("$checked files checked for unresolved links")
     }
 
-    fun checkExternalLink(actualSubpath: String, linkBody: String, fullLink: String, extension: String = "html") {
-        val match = "!!match!!"
-        val notMatch = "!!not-match!!"
-
+    fun checkExternalLink(actualSubpath: String, link: String, extension: String = "html") {
         val actualPath = testProjectDir.root.toPath().resolve(actualSubpath).normalize()
-        var checked = 0
+        var filesChecked = 0
         var totalEntries = 0
+
         Files.walk(actualPath).filter { Files.isRegularFile(it) && it.fileName.toString().endsWith(".$extension") }.forEach {
-            val text = it.toFile().readText()
-
-            val textWithoutMatches = text.replace(fullLink, match)
-
-            val textWithoutNonMatches = textWithoutMatches.replace(linkBody, notMatch)
-
-            if (textWithoutNonMatches != textWithoutMatches) {
-
-                val expected = textWithoutNonMatches.replace(notMatch, fullLink).replace(match, fullLink)
-                val actual = textWithoutMatches.replace(match, fullLink)
-
-                throw FileComparisonFailure("", expected, actual, null)
-            }
-            if (text != textWithoutMatches)
-                totalEntries++
-
-            checked++
+            val text: String = it.toFile().readText()
+            totalEntries += countSubstring(text, link)
+            filesChecked++
         }
-        println("$checked files checked for valid external links '$linkBody', found $totalEntries links")
+        println("$filesChecked files checked for valid external links '$link', found $totalEntries links")
+        if (totalEntries < 1) {
+            throw ComparisonFailure("link not found", ">0", totalEntries.toString())
+        }
     }
+
+    private fun countSubstring(s: String, sub: String): Int = s.split(sub).size - 1
 
     fun configure(gradleVersion: String = "3.5", kotlinVersion: String = "1.1.2", arguments: Array<String>): GradleRunner {
         val fatjar = dokkaFatJarPathData.toFile().readText()

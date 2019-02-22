@@ -40,13 +40,13 @@ class MultiProjectSingleOutTest : AbstractDokkaGradleTest() {
         checkNoErrorClasses(docsOutput)
         checkNoUnresolvedLinks(docsOutput)
 
-        checkExternalLink(docsOutput, "<span class=\"identifier\">String</span>",
+        checkExternalLink(docsOutput,
             """<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a>""")
 
-        checkExternalLink(docsOutput, ">s1.MyClass<",
+        checkExternalLink(docsOutput,
             """<a href="../s1/-my-class/index.html">s1.MyClass</a>""")
 
-        checkExternalLink(docsOutput, "s1.Super.foo",
+        checkExternalLink(docsOutput,
             """<p>Overriden magic. Also reference to <a href="../../s1/-super/foo.html">s1.Super.foo</a></p>""")
 
     }
@@ -59,14 +59,14 @@ class MultiProjectSingleOutTest : AbstractDokkaGradleTest() {
         checkNoErrorClasses(docsOutput, extension = "md")
         checkNoUnresolvedLinks(docsOutput, extension = "md")
 
-        checkExternalLink(docsOutput, "https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html",
+        checkExternalLink(docsOutput,
             """[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)"""
             , extension = "md")
 
-        checkExternalLink(docsOutput, "[s1.MyClass]",
+        checkExternalLink(docsOutput,
             """[s1.MyClass](../s1/-my-class/index.md)""", extension = "md")
 
-        checkExternalLink(docsOutput, "[s1.Super.foo]",
+        checkExternalLink(docsOutput,
             """Overriden magic. Also reference to [s1.Super.foo](../../s1/-super/foo.md)""", extension = "md")
     }
 
