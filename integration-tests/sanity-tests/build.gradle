@@ -1,0 +1,27 @@
+apply plugin: 'kotlin'
+
+sourceCompatibility = 1.8
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        freeCompilerArgs += "-Xjsr305=strict"
+        languageVersion = "1.2"
+        apiVersion = "1.0"
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    testImplementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: kotlin_for_gradle_runtime_version
+    testImplementation gradleTestKit()
+    testImplementation 'junit:junit:4.12'
+    testImplementation group: 'org.jetbrains.kotlin', name: 'kotlin-test-junit', version: kotlin_for_gradle_runtime_version
+    testImplementation project(path: ':integration-tests:common', configuration: 'testOutput')
+    testImplementation project(path: ':runners:cli')
+}
+
+task(regenerateDocumentation, dependsOn: 'classes', type: JavaExec) {
+    main = 'org.jetbrains.dokka.tests.sanity.ReferenceDocumentationGenerator'
+    classpath = sourceSets.test.runtimeClasspath
+    args 'multiProjectSingleOut', 'javadoc'
+}

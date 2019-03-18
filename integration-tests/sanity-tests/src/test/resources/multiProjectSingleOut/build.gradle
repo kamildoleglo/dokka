@@ -1,0 +1,34 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
+    }
+}
+
+apply plugin: 'org.jetbrains.dokka'
+
+dokka {
+    outputDirectory = "$buildDir/$output_dir"
+    outputFormat = "$output_format"
+    kotlinTasks {
+        [":subA:compileKotlin", ":subB:compileKotlin"]
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+subprojects {
+    buildscript {
+        repositories {
+            mavenCentral()
+            jcenter()
+        }
+        dependencies {
+            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$test_kotlin_version"
+        }
+    }
+}

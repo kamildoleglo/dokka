@@ -1,0 +1,11 @@
+apply plugin: 'kotlin'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: test_kotlin_version
+    compile project(":subA")
+}

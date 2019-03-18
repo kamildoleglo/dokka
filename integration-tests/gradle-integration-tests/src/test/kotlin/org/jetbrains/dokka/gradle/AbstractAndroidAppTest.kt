@@ -1,6 +1,7 @@
 package org.jetbrains.dokka.gradle
 
 import org.gradle.testkit.runner.TaskOutcome
+import org.jetbrains.dokka.tests.common.copy
 import kotlin.test.assertEquals
 
 abstract class AbstractAndroidAppTest(val testDataRootPath: String) : AbstractDokkaAndroidGradleTest() {

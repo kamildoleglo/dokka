@@ -22,8 +22,9 @@ dependencies {
     testCompileOnly group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: kotlin_for_gradle_runtime_version
     testCompile group: 'org.jetbrains.kotlin', name: 'kotlin-test-junit', version: kotlin_for_gradle_runtime_version
     testCompile ideaRT()
+    testCompile project(path: ':integration-tests:common', configuration: 'testOutput')
     testCompile project(path: ':runners:fatjar', configuration: 'shadow')
-
+    
     dokkaPlugin project(path: ':runners:gradle-plugin', configuration: 'shadow')
     dokkaAndroidPlugin project(path: ':runners:android-gradle-plugin', configuration: 'shadow')
     dokkaFatJar project(path: ":runners:fatjar", configuration: 'shadow')

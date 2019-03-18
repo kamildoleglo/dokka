@@ -21,7 +21,7 @@ abstract class AbstractDokkaAndroidGradleTest : AbstractDokkaGradleTest() {
             if (sdkDir == null || sdkDir.isEmpty()) {
                 error("Android SDK home not set, " +
                         "try setting \$ANDROID_HOME " +
-                        "or sdk.dir in runners/gradle-integration-tests/testData/android.local.properties")
+                        "or sdk.dir in integration-tests/gradle-integration-tests/testData/android.local.properties")
             }
             val sdkDirFile = File(sdkDir)
             if (!sdkDirFile.exists()) error("\$ANDROID_HOME and android.local.properties points to non-existing location")

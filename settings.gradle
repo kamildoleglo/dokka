@@ -8,5 +8,7 @@ include 'core',
         'runners:maven-plugin',
         'runners:gradle-plugin',
         'runners:android-gradle-plugin',
-        'integration-tests:gradle-integration-tests'
+        'integration-tests:gradle-integration-tests',
+        'integration-tests:sanity-tests',
+        'integration-tests:common'
 

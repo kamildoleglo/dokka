@@ -3,6 +3,8 @@ package org.jetbrains.dokka.gradle
 
 import com.intellij.rt.execution.junit.FileComparisonFailure
 import org.gradle.testkit.runner.GradleRunner
+import org.jetbrains.dokka.tests.common.assertEqualsIgnoringSeparators
+import org.jetbrains.dokka.tests.common.writeStructure
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import java.io.File

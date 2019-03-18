@@ -2,8 +2,10 @@ package org.jetbrains.dokka.gradle
 
 import org.gradle.testkit.runner.TaskOutcome
 import org.jetbrains.dokka.gradle.AbstractAndroidAppTest.AndroidPluginParams
+import org.jetbrains.dokka.tests.common.copy
 import org.junit.Test
 import kotlin.test.assertEquals
+
 
 class AndroidMultiFlavourAppTest : AbstractDokkaAndroidGradleTest() {
 
