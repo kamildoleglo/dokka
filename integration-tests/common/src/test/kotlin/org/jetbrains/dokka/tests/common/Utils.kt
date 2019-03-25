@@ -11,11 +11,15 @@ import java.nio.file.attribute.BasicFileAttributes
 fun File.writeStructure(builder: StringBuilder, relativeTo: File = this, spaces: Int = 0) {
     builder.append(" ".repeat(spaces))
     val out = if (this != relativeTo) this.relativeTo(relativeTo) else this
-
     builder.append(out)
+
     if (this.isDirectory) {
         builder.appendln("/")
-        this.listFiles().sortedBy { it.name }.forEach { it.writeStructure(builder, this, spaces + 4) }
+        this.listFiles()
+            .sortedBy { it.name }
+            .forEach {
+                it.writeStructure(builder, this, spaces + 4)
+            }
     } else {
         builder.appendln()
     }
@@ -33,8 +37,7 @@ fun assertEqualsIgnoringSeparators(expectedFile: File, output: String) {
 class CopyFileVisitor(private var sourcePath: Path?, private val targetPath: Path) : SimpleFileVisitor<Path>() {
 
     @Throws(IOException::class)
-    override fun preVisitDirectory(dir: Path,
-                                   attrs: BasicFileAttributes): FileVisitResult {
+    override fun preVisitDirectory(dir: Path, attrs: BasicFileAttributes): FileVisitResult {
         if (sourcePath == null) {
             sourcePath = dir
         } else {
@@ -44,16 +47,14 @@ class CopyFileVisitor(private var sourcePath: Path?, private val targetPath: Pat
     }
 
     @Throws(IOException::class)
-    override fun visitFile(file: Path,
-                           attrs: BasicFileAttributes): FileVisitResult {
+    override fun visitFile(file: Path, attrs: BasicFileAttributes): FileVisitResult {
         Files.copy(file, targetPath.resolve(sourcePath?.relativize(file)), StandardCopyOption.REPLACE_EXISTING)
         return FileVisitResult.CONTINUE
     }
 }
 
-fun Path.copy(to: Path) {
-    Files.walkFileTree(this, CopyFileVisitor(this, to))
-}
+fun Path.copy(to: Path) = Files.walkFileTree(this, CopyFileVisitor(this, to))
+
 
 
 fun verifyDirsAreEqual(first: Path, second: Path) {
@@ -69,10 +70,12 @@ fun verifyDirsAreEqual(first: Path, second: Path) {
             println("=== comparing: {$filePath} to {$fileInOtherPath}")
 
             val thisContent = filePath.toFile().readLines()
-                    .map(String::trimIndent).map { it.replace("<!--.*-->".toRegex(),"") }
+                .map(String::trimIndent)
+                .map { it.replace("<!--.*-->".toRegex(),"") }
 
             val otherContent = fileInOtherPath.toFile().readLines()
-                    .map(String::trimIndent).map { it.replace("<!--.*-->".toRegex(),"") }
+                .map(String::trimIndent)
+                .map { it.replace("<!--.*-->".toRegex(),"") }
 
 
             val thisIterator = thisContent.iterator()
@@ -97,18 +100,16 @@ fun verifyDirsAreEqual(first: Path, second: Path) {
             return result
         }
     }
+
     Files.walkFileTree(first, CompareFileVisitor())
     if (differences > 0){
         throw AssertionFailedError("Found $differences differences")
     }
 }
 
-fun deleteDirectory(directoryToBeDeleted: File): Boolean {
-    val allContents = directoryToBeDeleted.listFiles()
-    if (allContents != null) {
-        for (file in allContents) {
-            deleteDirectory(file)
-        }
+fun deleteDirectory(directory: File): Boolean {
+    directory.listFiles()?.forEach {
+        deleteDirectory(it)
     }
-    return directoryToBeDeleted.delete()
+    return directory.delete()
 }

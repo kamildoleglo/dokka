@@ -30,14 +30,24 @@ abstract class AbstractSanityTest {
         verifyDirsAreEqual(docsOutputPath, referenceDocsPath)
     }
 
-    fun compareWithOlderVersion(outputFormat: String, dokkaVersion: String, gradleVersion: String, kotlinVersion: String,
+    fun compareWithOlderVersion(outputFormat: String,
+                                dokkaVersion: String,
+                                gradleVersion: String,
+                                kotlinVersion: String,
                                 testDataModuleName: String) {
 
         val oldDocsOutputDir = "dokka_old"
         val docsOutputDir = "dokka"
 
-        val result = configureGradle(dokkaVersion, gradleVersion, kotlinVersion, docsOutputDir, outputFormat,
-                arguments = arrayOf("dokka", "--stacktrace")).build()
+        val result = configureGradle(
+                            dokkaVersion,
+                            gradleVersion,
+                            kotlinVersion,
+                            docsOutputDir,
+                            outputFormat,
+                            arguments = arrayOf("dokka", "--stacktrace")
+                        ).build()
+
         println(result.output)
         TestCase.assertEquals(TaskOutcome.SUCCESS, result.task(":dokka")?.outcome)
 
@@ -57,8 +67,12 @@ abstract class AbstractSanityTest {
         verifyDirsAreEqual(docsOutputPath, oldDocsOutputPath)
     }
 
-    protected open fun configureGradle(dokkaVersion: String, gradleVersion: String = "4.5", kotlinVersion: String = "1.3.21",
-                                  outputDirectory: String = "dokka", outputFormat: String = "html", arguments: Array<String>): GradleRunner {
+    protected open fun configureGradle(dokkaVersion: String,
+                                       gradleVersion: String = "4.5",
+                                       kotlinVersion: String = "1.3.21",
+                                       outputDirectory: String = "dokka",
+                                       outputFormat: String = "html",
+                                       arguments: Array<String>): GradleRunner {
         return GradleRunner.create()
                 .withProjectDir(testTmpDir.root)
                 .withArguments("-Ptest_kotlin_version=$kotlinVersion",
@@ -71,7 +85,10 @@ abstract class AbstractSanityTest {
     }
 
 
-    protected open fun configureCli(moduleName: String, outputDirectory: String = "dokka", outputFormat: String ="html"): Array<String> {
+    protected open fun configureCli(moduleName: String,
+                                    outputDirectory: String = "dokka",
+                                    outputFormat: String ="html"
+    ): Array<String> {
         return arrayOf(tmpRootPath.toAbsolutePath().toString(),
                 "-output", tmpRootPath.toAbsolutePath().toString()+"/build/$outputDirectory",
                 "-module", moduleName,

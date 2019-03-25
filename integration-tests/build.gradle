@@ -4,4 +4,7 @@ subprojects {
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         }
     }
+    ext {
+        junit_version = '4.12'
+    }
 }

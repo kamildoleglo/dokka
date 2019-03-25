@@ -14,7 +14,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 dependencies {
     testImplementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: kotlin_for_gradle_runtime_version
     testImplementation gradleTestKit()
-    testImplementation 'junit:junit:4.12'
+    testImplementation group: 'junit', name: 'junit', version: junit_version
     testImplementation group: 'org.jetbrains.kotlin', name: 'kotlin-test-junit', version: kotlin_for_gradle_runtime_version
     testImplementation project(path: ':integration-tests:common', configuration: 'testOutput')
     testImplementation project(path: ':runners:cli')

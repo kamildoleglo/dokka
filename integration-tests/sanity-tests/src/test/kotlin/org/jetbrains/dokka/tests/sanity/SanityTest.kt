@@ -14,18 +14,18 @@ class SanityTest: AbstractSanityTest() {
     }
 
     @Test
-    fun `test dokka 0_9_17 and current html`() {
-        compareWithOlderVersion("html", "0.9.17", "4.5", "1.3.21", testDataModuleName)
+    fun `test dokka 0_9_18 and current html`() {
+        compareWithOlderVersion("html", "0.9.18", "4.5", "1.3.21", testDataModuleName)
     }
 
     @Test
-    fun `test dokka 0_9_17 and current javadoc`() {
-        compareWithOlderVersion("javadoc", "0.9.17", "4.5", "1.3.21", testDataModuleName)
+    fun `test dokka 0_9_18 and current javadoc`() {
+        compareWithOlderVersion("javadoc", "0.9.18", "4.5", "1.3.21", testDataModuleName)
     }
 
     @Test
-    fun `test dokka 0_9_17 and current markdown`() {
-        compareWithOlderVersion("markdown", "0.9.17", "4.5", "1.3.21", testDataModuleName)
+    fun `test dokka 0_9_18 and current markdown`() {
+        compareWithOlderVersion("markdown", "0.9.18", "4.5", "1.3.21", testDataModuleName)
     }
 
     @Test
