@@ -16,7 +16,7 @@ jobs:
     - name: Checkout stdlib 
       uses: actions/checkout@v2
       with:
-        repository: 'https://github.com/kamildoleglo/kotlin-dokka-stdlib'
+        repository: 'kamildoleglo/kotlin-dokka-stdlib'
         ref: 'master'
         path: stdlib
 
