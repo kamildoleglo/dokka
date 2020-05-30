@@ -20,7 +20,7 @@ jobs:
         java-version: 11
         
     - name: Publish dokka locally
-      run: ./dokka/gradlew clean publishToMavenLocal --stacktrace
+      run: ./gradlew clean publishToMavenLocal --stacktrace
       working-directory: ./dokka
 
     - name: Checkout stdlib
@@ -31,7 +31,7 @@ jobs:
         path: stdlib
 
     - name: Document stdlib
-      run: ./stdlib/gradlew clean callDokka --stacktrace
+      run: ./gradlew clean callDokka --stacktrace
       working-directory: ./stdlib
 
     - name: Configure AWS credentials for S3 access
