@@ -1,0 +1,43 @@
+name: S3-output
+
+on: push
+
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    - name: Checkout dokka
+      uses: actions/checkout@v2
+
+    - name: Checkout stdlib 
+      uses: actions/checkout@v2
+      with:
+        repository: 'https://github.com/kamildoleglo/kotlin-dokka-stdlib'
+        ref: 'master'
+        path: stdlib
+
+    - uses: actions/setup-java@v1
+      with:
+        java-version: 11
+        
+    - name: Publish dokka locally
+      run: ./gradlew clean publishToMavenLocal --stacktrace
+    
+    - name: Document stdlib
+      run: ./stdlib/gradlew clean callDokka --stacktrace
+   
+    - name: Configure AWS credentials for S3 access
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2
+
+    - name: Copy files to s3 bucket with the AWS CLI
+      run: |
+        aws s3 rm s3://dokka-test-bucket/${GITHUB_REF#refs/heads/}/stdlib --recursive
+        aws s3 sync ./stdlib/build/dokka s3://dokka-test-bucket/${GITHUB_REF#refs/heads/}/stdlib
