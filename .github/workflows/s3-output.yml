@@ -2,13 +2,14 @@ name: S3-output
 
 on: push
 
+env:
+  branch-name: ${GITHUB_REF#refs/heads/}
+  bucket-name: 'dokka-test-bucket'
+
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: Checkout dokka
       uses: actions/checkout@v2
@@ -41,7 +42,7 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-2
 
-    - name: Copy files to s3 bucket with the AWS CLI
+    - name: Copy files to dokka's S3 bucket
       run: |
-        aws s3 rm s3://dokka-test-bucket/${GITHUB_REF#refs/heads/}/stdlib --recursive
-        aws s3 sync ./stdlib/build/dokka s3://dokka-test-bucket/${GITHUB_REF#refs/heads/}/stdlib
+        aws s3 --recursive mv s3://${{ env.bucket-name }}/${{ env.branch-name }}/stdlib/latest s3://${{ env.bucket-name }}/${{ env.branch-name }}/stdlib/prev
+        aws s3 sync ./stdlib/build/dokka s3://${{ env.bucket-name }}/${{ env.branch-name }}/stdlib/latest
