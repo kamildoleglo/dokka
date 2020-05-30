@@ -4,7 +4,7 @@ on: push
 
 env:
   branch-name: ${GITHUB_REF#refs/heads/}
-  bucket-name: 'dokka-test-bucket'
+  bucket-name: 'dokka-snapshots'
 
 jobs:
   build:
