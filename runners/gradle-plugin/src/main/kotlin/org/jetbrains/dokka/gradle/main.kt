@@ -25,8 +25,6 @@ open class DokkaPlugin : Plugin<Project> {
         addDokkaCollectorTasks(project, DokkaCollectorTask::class.java)
     }
 
-
-    
     private fun loadDokkaVersion() =
         DokkaVersion.loadFrom(javaClass.getResourceAsStream("/META-INF/gradle-plugins/org.jetbrains.dokka.properties"))
 
