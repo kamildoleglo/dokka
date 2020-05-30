@@ -44,5 +44,6 @@ jobs:
 
     - name: Copy files to dokka's S3 bucket
       run: |
+        aws s3 --recursive rm s3://${{ env.bucket-name }}/${{ env.branch-name }}/stdlib/prev
         aws s3 --recursive mv s3://${{ env.bucket-name }}/${{ env.branch-name }}/stdlib/latest s3://${{ env.bucket-name }}/${{ env.branch-name }}/stdlib/prev
         aws s3 sync ./stdlib/build/dokka s3://${{ env.bucket-name }}/${{ env.branch-name }}/stdlib/latest
