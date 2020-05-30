@@ -12,23 +12,25 @@ jobs:
     steps:
     - name: Checkout dokka
       uses: actions/checkout@v2
-
-    - name: Checkout stdlib 
-      uses: actions/checkout@v2
       with:
-        repository: 'kamildoleglo/kotlin-dokka-stdlib'
-        ref: 'master'
-        path: stdlib
+        path: dokka
 
     - uses: actions/setup-java@v1
       with:
         java-version: 11
         
     - name: Publish dokka locally
-      run: ./gradlew clean publishToMavenLocal --stacktrace
-    
+      run: ./dokka/gradlew publishToMavenLocal --stacktrace
+
+    - name: Checkout stdlib
+      uses: actions/checkout@v2
+      with:
+        repository: 'kamildoleglo/kotlin-dokka-stdlib'
+        ref: 'master'
+        path: stdlib
+
     - name: Document stdlib
-      run: ./stdlib/gradlew clean callDokka --stacktrace
+      run: ./stdlib/gradlew callDokka --stacktrace
    
     - name: Configure AWS credentials for S3 access
       uses: aws-actions/configure-aws-credentials@v1
