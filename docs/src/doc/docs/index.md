@@ -13,4 +13,4 @@ Dokka provides support for the following build systems:
 * [Command line](user_guide/cli/usage.md)
 
 !!! note
-    The Gradle plugin is the preferred way to use Dokka
+    The Gradle plugin is the preferred way to use dokka
